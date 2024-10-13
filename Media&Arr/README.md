@@ -106,7 +106,7 @@ docker exec -it conatiner_name bash
 wget -qO- https://ipinfo.io
 ```
 
-### Nginx Proxy Manager
+### Jellyfin over Nginx Proxy Manager
 
 Nginx Proxy Manager provides an easy-to-use web GUI for Nginx.
 
