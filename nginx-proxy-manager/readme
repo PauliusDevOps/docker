@@ -1,0 +1,22 @@
+Default Admin User:
+
+    Email:    admin@example.com
+    Password: changeme
+
+To make Cockpit proxy aware, you will need to modify the Cockpit config file located at /etc/cockpit/cockpit.conf. 
+This file may not exist and if it doesn't you should create it.
+
+    sudo nano /etc/cockpit/cockpit.conf
+
+    [WebService]
+    Origins = https://cockpit.domain.tld wss://cockpit.domain.tld
+    ProtocolHeader = X-Forwarded-Proto
+
+   sudo systemctl restart cockpit.service
+
+Nginx as a reverse proxy for Cockpit, ensure that Nginx is configured to correctly forward TLS headers to Cockpit. 
+In the Nginx configuration Advanced tab for Cockpit, add:
+
+
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-For $remote_addr;
