@@ -9,7 +9,7 @@ This file may not exist and if it doesn't you should create it.
     sudo nano /etc/cockpit/cockpit.conf
 
     [WebService]
-    Origins = https://cockpit.domain.tld wss://cockpit.domain.tld
+    Origins = https://cockpit.domain.tld wss://cockpit.domain.tld https://192.168.1.222:9090
     ProtocolHeader = X-Forwarded-Proto
 
    sudo systemctl restart cockpit.service
