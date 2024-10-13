@@ -105,3 +105,38 @@ Jump into the Exec console and run the wget command below. Tested with nzbget, d
 docker exec -it conatiner_name bash
 wget -qO- https://ipinfo.io
 ```
+
+### Nginx Proxy Manager
+
+Nginx Proxy Manager provides an easy-to-use web GUI for Nginx.
+
+Create a proxy host and point it to your Jellyfin server's IP address and http port (usually 8096)
+
+Enable "Block Common Exploits", and "Websockets Support". Configure the access list if you intend to use them. Otherwise leave it on "publicly accessible".
+
+In the "Advanced" tab, enter the following in "Custom Nginx Configuration". This is optional, but recommended if you intend to make Jellyfin accessible outside of your home.
+```
+    # Disable buffering when the nginx proxy gets very resource heavy upon streaming
+    proxy_buffering off;
+
+    # Proxy main Jellyfin traffic
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-Protocol $scheme;
+    proxy_set_header X-Forwarded-Host $http_host;
+    proxy_headers_hash_max_size 2048;
+    proxy_headers_hash_bucket_size 128; 
+    
+    # Security / XSS Mitigation Headers
+    # NOTE: X-Frame-Options may cause issues with the webOS app
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "0";
+    add_header X-Content-Type-Options "nosniff";
+
+    # Content Security Policy
+    # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+    # Enforces https content and restricts JS/CSS to origin
+    # External Javascript (such as cast_sender.js for Chromecast) must be whitelisted.
+    # NOTE: The default CSP headers may cause issues with the webOS app
+    add_header Content-Security-Policy "default-src https: data: blob: ; img-src 'self' https://* ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.youtube.com blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; frame-ancestors 'self'";
+```
+In the "SSL" tab, use the jellyfin.example.org certificate that you created with Nginx Proxy Manager and enable "Force SSL", "HTTP/2 Support", "HSTS Enabled", "HSTS Subdomains".
