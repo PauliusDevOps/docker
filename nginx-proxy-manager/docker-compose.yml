@@ -7,5 +7,5 @@ services:
       - '81:81'
       - '443:443'
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - /mnt/data/docker/npm/data:/data
+      - /mnt/data/docker/npm/etsencrypt:/etc/letsencrypt
