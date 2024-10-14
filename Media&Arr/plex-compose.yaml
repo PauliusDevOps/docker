@@ -7,7 +7,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/Los_Angeles
+      - TZ=Europe/Vilnius
       - VERSION=docker
       - PLEX_CLAIM= #optional
     ports:
@@ -15,8 +15,8 @@ services:
     devices:
      - /dev/dri:/dev/dri # QuickSync
     volumes:
-      - /docker/plex:/config
-      - /data:/data
+      - /mnt/data/docker/plex:/config
+      - /mnt/data:/data
     restart: unless-stopped
 
   overseerr:
@@ -25,12 +25,12 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/Los_Angeles
+      - TZ=Europe/Vilnius
     volumes:
-      - /docker/overseer/config:/config
-      - /data:/data
+      - /mnt/data/docker/overseer/config:/config
+      - /mnt/data:/data
     ports:
-      - 5055:5055
+      - 5056:5055
     restart: unless-stopped
 
   tautulli:
@@ -39,9 +39,9 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/Los_Angeles
+      - TZ=Europe/Vilnius
     volumes:
-      - /docker/tautulli:/config
+      - /mnt/data/docker/tautulli:/config
     ports:
       - 8181:8181
     restart: unless-stopped
