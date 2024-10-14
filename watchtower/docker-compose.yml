@@ -15,8 +15,8 @@ services:
     container_name: prometheus
     image: prom/prometheus
     volumes:
-      - ./prometheus/:/etc/prometheus/
-      - prometheus:/prometheus/
+      - /mnt/data/docker/prometheus/:/etc/prometheus/
+      - /mnt/data/docker/prometheus:/prometheus/
     ports:
       - 9090:9090
   grafana:
@@ -27,8 +27,8 @@ services:
     environment:
       GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
     volumes:
-      - grafana:/var/lib/grafana
-      - ./grafana:/etc/grafana/provisioning
+      - /mnt/data/docker/grafana:/var/lib/grafana
+      - /mnt/data/docker/grafana:/etc/grafana/provisioning
   parent:
     image: nginx
     container_name: parent
