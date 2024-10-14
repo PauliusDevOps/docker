@@ -11,10 +11,9 @@ services:
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
     volumes:
-      - /docker/qbittorrent:/config
-      - /data:/data
-    network_mode: service:gluetun
-
+      - /mnt/data/docker/qbittorrent:/config
+      - /mnt/data:/data
+   
   nzbget:
     image: lscr.io/linuxserver/nzbget:latest
     container_name: nzbget
@@ -26,11 +25,10 @@ services:
       - NZBGET_PASS=password
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/nzbget:/config
-      - /data:/data
+      - /mnt/data/docker/nzbget:/config
+      - /mnt/data:/data
     restart: unless-stopped
-    network_mode: service:gluetun
-
+    
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -40,9 +38,9 @@ services:
       - TZ=Europe/Vilnius
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/prowlarr:/config
+      - /mnt/data/docker/prowlarr:/config
     restart: unless-stopped
-    network_mode: service:gluetun
+    
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -54,8 +52,8 @@ services:
       - TZ=Europe/Vilnius
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/sonarr:/config
-      - /data:/data
+      - /mnt/data/docker/sonarr:/config
+      - /mnt/data:/data
     ports:
       - 8989:8989
 
@@ -113,8 +111,8 @@ services:
       - TZ=Europe/Vilnius
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/readarr:/config
-      - /data:/data
+      - /mnt/data/docker/readarr:/config
+      - /mnt/data/data:/data
     ports:
       - 8787:8787
     restart: unless-stopped
