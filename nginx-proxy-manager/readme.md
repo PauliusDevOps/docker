@@ -23,3 +23,24 @@ In the Nginx configuration Advanced tab for Cockpit, add:
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-For $remote_addr;
 ```
+
+### NGINX Proxy Manager Compose (customized)
+
+```
+services:
+  proxy:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - proxy-data:/data
+      - proxy-letsencrypt:/etc/letsencrypt
+    healthcheck:
+      test: ["CMD", "/usr/bin/check-health"]
+      interval: 10s
+      timeout: 3s
+volumes:
+  proxy-data:
+  proxy-letsencrypt:
+```
