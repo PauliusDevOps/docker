@@ -67,8 +67,8 @@ services:
       - TZ=Europe/Vilnius
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/radarr:/config
-      - /data:/data
+      - /mnt/data/docker/radarr:/config
+      - /mnt/data:/data
     ports:
       - 7878:7878
 
@@ -78,8 +78,8 @@ services:
     restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/lidarr:/config
-      - /data:/data
+      - /mnt/data/docker/lidarr:/config
+      - /mnt/data:/data
     environment:
      - PUID=1000
      - PGID=1000
@@ -97,8 +97,8 @@ services:
       - TZ=Europe/Vilnius
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /docker/bazarr:/config
-      - /data:/data
+      - /mnt/data/docker/bazarr:/config
+      - /mnt/data:/data
     ports:
       - 6767:6767
 
@@ -112,7 +112,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/data/docker/readarr:/config
-      - /mnt/data/data:/data
+      - /mnt/data:/data
     ports:
       - 8787:8787
     restart: unless-stopped
