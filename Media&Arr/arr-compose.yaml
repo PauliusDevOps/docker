@@ -10,6 +10,10 @@ services:
       - TZ=Europe/Vilnius
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
     volumes:
       - /mnt/data/docker/qbittorrent:/config
       - /mnt/data:/data
@@ -27,6 +31,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/data/docker/nzbget:/config
       - /mnt/data:/data
+    ports:
+      - 6789:6789
     restart: unless-stopped
     
   prowlarr:
@@ -39,6 +45,8 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/data/docker/prowlarr:/config
+    ports:
+      - 9696:9696
     restart: unless-stopped
     
 
