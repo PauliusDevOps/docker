@@ -14,4 +14,4 @@ services:
       #- PING_TIMEOUT=200 #Uncomment this line to change the time to wait for a ping answer in (in ms) default value is 300 milliseconds
     volumes:
       - /mnt/data/docker/gtpwol/computers.txt:/app/computers.txt
-      - /mnt/data/docker/appdata/cron:/etc/cron.d
+      - /mnt/data/docker/gtpwol/appdata/cron:/etc/cron.d
