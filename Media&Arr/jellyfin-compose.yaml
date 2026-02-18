@@ -15,43 +15,23 @@ services:
      - /dev/dri:/dev/dri # QuickSync
     restart: unless-stopped
 
-  jellyseerr:
-    container_name: jellyseerr
-    image: fallenbagel/jellyseerr:latest
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: seerr
     environment:
-      - PUID=1000
-      - PGID=1000
+      - LOG_LEVEL=debug
       - TZ=Europe/Vilnius
-    volumes:
-      - /mnt/data/docker/jellyseerr:/app/config
+      - PORT=5055 #optional
     ports:
-      - 5055:5055
+      - 5057:5055
+    volumes:
+      - /mnt/data/docker/seer/config:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
     restart: unless-stopped
 
-  jellystat-db:
-    image: postgres:15.2
-    container_name: jellystat-db
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mypassword123654
-    volumes:
-      - /mnt/data/docker/jellyfin/stats/postgres:/var/lib/postgresql/data
-
-  jellystat:
-    image: cyfershepard/jellystat:latest
-    container_name: jellystat
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mypassword123654
-      POSTGRES_IP: jellystat-db
-      POSTGRES_PORT: 5432
-      JWT_SECRET: "my-secret-jwt-key-123654"
-      TZ: Europe/Vilnius
-    volumes:
-      - /mnt/data/docker/jellyfin/stats/backup-data:/app/backend/backup-data
-    ports:
-      - "3000:3000"
-    depends_on:
-      - jellystat-db
