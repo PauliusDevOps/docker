@@ -1,13 +1,13 @@
-version: '3'
 services:
   homarr:
     container_name: homarr
-    image: ghcr.io/ajnart/homarr:latest
+    image: ghcr.io/homarr-labs/homarr:latest
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - /mnt/data/docker/homarr/configs:/app/data/configs
-      - /mnt/data/docker/homarr/icons:/app/public/icons
-      - /mnt/data/docker/homarr/data:/data
+      - /mnt/data/docker/homarr/appdata:/appdata
+    environment:
+      - SECRET_ENCRYPTION_KEY=db35cdce1b01c479b15e739cd5f7151d836c906446616b23987290c2835832ec
     ports:
       - '7575:7575'
+			
