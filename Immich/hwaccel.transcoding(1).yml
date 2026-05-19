@@ -1,0 +1,15 @@
+# hwaccel.transcoding.yml
+services:
+  cpu: {}
+
+  nvenc:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities:
+                - gpu
+                - compute
+                - video
